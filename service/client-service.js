@@ -29,8 +29,6 @@ const crearNuevaLinea = (nombre, email) => {
 
 const table = document.querySelector("[data-table]")
 
-
-
 //abrir http (metodo, url)
 
 //CRUD   - Métodos HTTP
@@ -39,7 +37,24 @@ const table = document.querySelector("[data-table]")
 //Update - Put/ Patch   
 //Delete - Delete   
 
-const listaClientes = () => {
+//Fetch API
+const listaClientes = () => fetch ("http://localhost:3000/perfil").then ((respuesta) => respuesta.json());
+    
+
+listaClientes()
+    .then((data) => {
+        data.forEach((perfil) => {
+            const nuevaLinea = crearNuevaLinea(perfil.nombre, perfil.email);
+            table.appendChild(nuevaLinea);
+        });
+    })
+    .catch((error) => alert("Ocurrió un error"));
+
+
+
+
+    /*
+    const listaClientes = () => {
     const promise = new Promise((resolve, reject) => {
         const http = new XMLHttpRequest();
         http.open("GET", "http://localhost:3000/perfil");
@@ -57,12 +72,4 @@ const listaClientes = () => {
     });
     return promise;
 };
-
-listaClientes()
-    .then((data) => {
-        data.forEach((perfil) => {
-            const nuevaLinea = crearNuevaLinea(perfil.nombre, perfil.email);
-            table.appendChild(nuevaLinea);
-        });
-    })
-    .catch((error) => alert("Ocurrió un error"));
+*/
